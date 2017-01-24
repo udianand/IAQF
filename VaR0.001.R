@@ -1,6 +1,6 @@
 #VAR model - 0.001
 
-
+setwd("C:/Users/XingBill/Desktop/IAQFfolder/IAQF")
 #load workspace
 load(file="VaR0.0001.RData")
 
