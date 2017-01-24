@@ -15,12 +15,11 @@
 
 ##Data Definition
 #CPI: All Urban Consumers - Seasonally Unadjusted USA All items  - Non Adj. CPI\n  - CPI
-#FFR: Interest Rates Prices Production or Labor United States 60B..ZF... FEDERAL 
-      #FUNDS RATE - Average UNITED STATES  - \n  - Percent per annum
+#FFR: Federal Funds Effective Rate USA  - %"
 #UNEMP: Unemployment Rate Non-Seasonally Adjusted USA  - %
 
 CPI = CPI_All_items 
-FFR = Federal_fund_rate
+FFR = FFR_Monthly
 UNEMP = Unemployment_rate
 
 #Data Cleaning
@@ -46,7 +45,6 @@ summary(CPI)
 
 #FFR Data
 #--------#
-#FFR = FFR[-1,] #The first row contained text varibales
 names(FFR)
 names(FFR)[2]<-"InterestRates" #Change colnames
 FFR = as.data.frame(FFR) #Convert the list into a dataframe.
@@ -78,3 +76,33 @@ head(UNEMP)
 summary(UNEMP)
 
 #save.image(file="VaR0.0001.RData") Udit: Do not Uncomment
+##*********************************************************##
+
+#Convert into a Time Series.
+library(quantmod)
+library(zoo)
+
+UNEMP$TS = as.yearmon(as.character(UNEMP$Time), "%Y%m")
+UNEMP$TS = as.Date(UNEMP$TS)
+head(UNEMP)
+
+UNEMP.xts<-xts(UNEMP$UnempRate, order.by=UNEMP$TS) 
+chartSeries(UNEMP.xts)
+#*******#
+
+FFR$TS <- as.yearmon(as.character(FFR$Time), "%Y%m")
+FFR$TS = as.Date(FFR$TS)
+head(FFR)
+
+FFR.xts<-xts(FFR$InterestRates, order.by=FFR$TS) 
+chartSeries(FFR.xts)
+#******#
+
+CPI$TS = as.yearmon(as.character(CPI$Time), "%Y%m")
+CPI$TS = as.Date(CPI$TS)
+head(CPI)
+
+CPI.xts<-xts(CPI$CpiSeaAdj, order.by=CPI$TS) 
+chartSeries(CPI.xts)
+
+
