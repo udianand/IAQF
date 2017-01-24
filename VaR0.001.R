@@ -1,8 +1,10 @@
 #VAR model - 0.001
 
 setwd("C:/Users/XingBill/Desktop/IAQFfolder/IAQF")
+
+
 #load workspace
-load(file="VaR0.0001.RData")
+#load(file="VaR0.0001.RData") #Udit: Do Not Uncomment.
 
 ##Load Data from the GUI. or use command below
 
@@ -18,7 +20,7 @@ load(file="VaR0.0001.RData")
 #UNEMP: Unemployment Rate Non-Seasonally Adjusted USA  - %
 
 CPI = CPI_All_items 
-FFR = Federal_Funds_Rate_Average
+FFR = Federal_fund_rate
 UNEMP = Unemployment_rate
 
 #Data Cleaning
@@ -44,7 +46,7 @@ summary(CPI)
 
 #FFR Data
 #--------#
-FFR = FFR[-1,] #The first row contained text varibales
+#FFR = FFR[-1,] #The first row contained text varibales
 names(FFR)
 names(FFR)[2]<-"InterestRates" #Change colnames
 FFR = as.data.frame(FFR) #Convert the list into a dataframe.
@@ -75,4 +77,4 @@ UNEMP = UNEMP[order(UNEMP$Time),]
 head(UNEMP)
 summary(UNEMP)
 
-save.image(file="VaR0.0001.RData")
+#save.image(file="VaR0.0001.RData") Udit: Do not Uncomment
